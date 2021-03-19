@@ -8,7 +8,7 @@ router.get('/test1', (req, res) => {
 })
 
 
-
+//add movie
 router.post('/movies', async (req, res) => {
 
     const movie = new Movie(req.body);
@@ -24,6 +24,7 @@ router.post('/movies', async (req, res) => {
 
 })
 
+//get all movies
 router.get("/movies", async (req, res) => {
 
     try {
@@ -36,6 +37,7 @@ router.get("/movies", async (req, res) => {
 
 })
 
+// get the movie by unique id
 router.get("/movies/:id", async (req, res) => {
 
     const _id = req.params.id;
@@ -53,6 +55,7 @@ router.get("/movies/:id", async (req, res) => {
 
 })
 
+//update movie details
 router.patch("/movies/:id", async (req, res) => {
 
     const updates = Object.keys(req.body);
@@ -77,6 +80,7 @@ router.patch("/movies/:id", async (req, res) => {
     }
 })
 
+//delete movie 
 router.delete('/movies/:id', async (req, res) => {
     try {
         const movie = await Movie.findByIdAndDelete(req.params.id);

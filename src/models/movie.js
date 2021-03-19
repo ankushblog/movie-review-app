@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 var validator = require('validator');
 
+
+//fields of movie model
 const Movie = mongoose.model('Movie', {
 
     name: {
