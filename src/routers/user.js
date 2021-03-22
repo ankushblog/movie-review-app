@@ -3,6 +3,8 @@ const router = new express.Router()
 const User = require('../models/user')
 const auth = require('../middleware/authentication')
 
+
+
 // router.get('/test', (req, res) => {
 //     res.send('hello from ankush')
 // })
@@ -46,6 +48,38 @@ router.get("/users/me", auth, async (req, res) => {
     res.send(req.user)
 
 })
+
+// logout from the current session
+router.post("/users/logout", auth, async (req, res) => {
+
+    try {
+        req.user.tokens = req.user.tokens.filter((token) => {
+
+            return token.token !== req.token
+
+        })
+        await req.user.save()
+
+        res.send('successfully logout')
+    } catch (e) {
+        res.status(500).send()
+    }
+
+})
+
+// logout from all the sessions currently user is login
+router.post("/users/logoutall", auth, async (req, res) => {
+    try {
+        req.user.tokens = []
+
+        await req.user.save()
+        res.send('successfully logout from all accounts')
+    } catch (e) {
+        res.status(500).send()
+    }
+
+})
+
 
 
 //this end point is not useful as one user cannot see all other users data
@@ -127,6 +161,9 @@ router.delete('/users/:id', async (req, res) => {
         res.status(500).send(e);
     }
 })
+
+
+
 
 
 module.exports = router

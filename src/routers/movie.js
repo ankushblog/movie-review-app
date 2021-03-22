@@ -1,6 +1,8 @@
 const express = require('express')
 const router = new express.Router()
 const Movie = require('../models/movie')
+const multer = require('multer')
+const auth = require('../middleware/authentication')
 
 
 router.get('/test1', (req, res) => {
@@ -25,7 +27,7 @@ router.post('/movies', async (req, res) => {
 })
 
 //get all movies
-router.get("/movies", async (req, res) => {
+router.get("/movies", auth, async (req, res) => {
 
     try {
         const movies = await Movie.find({});
@@ -38,7 +40,7 @@ router.get("/movies", async (req, res) => {
 })
 
 // get the movie by unique id
-router.get("/movies/:id", async (req, res) => {
+router.get("/movies/:id", auth, async (req, res) => {
 
     const _id = req.params.id;
 
@@ -56,7 +58,7 @@ router.get("/movies/:id", async (req, res) => {
 })
 
 //update movie details
-router.patch("/movies/:id", async (req, res) => {
+router.patch("/movies/:id", auth, async (req, res) => {
 
     const updates = Object.keys(req.body);
     const allowUpdates = ['name', 'releasedate', 'image', 'description'];
@@ -81,7 +83,7 @@ router.patch("/movies/:id", async (req, res) => {
 })
 
 //delete movie 
-router.delete('/movies/:id', async (req, res) => {
+router.delete('/movies/:id', auth, async (req, res) => {
     try {
         const movie = await Movie.findByIdAndDelete(req.params.id);
         if (!movie) {
@@ -94,5 +96,25 @@ router.delete('/movies/:id', async (req, res) => {
     }
 })
 
+
+const upload = multer({
+    dest: 'avatars',
+    limits: {
+        fileSize: 1000000
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(jpg|jpeg)$/)) {
+            return cb(new Error('please upload jpg or jpeg'))
+        }
+        cb(undefined, true)
+    }
+})
+
+router.post('/movies/upload', upload.single('avatar'), async (req, res) => {
+    res.send()
+
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
+})
 
 module.exports = router

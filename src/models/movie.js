@@ -18,6 +18,9 @@ const Movie = mongoose.model('Movie', {
     },
     description: {
         type: String
+    },
+    avatar: {
+        type: Buffer
     }
 
 })
