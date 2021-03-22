@@ -21,8 +21,7 @@ router.post('/movies', async (req, res) => {
     } catch (e) {
         res.status(400).send(e);
     }
-    // res.send(req.body)
-    // console.log(req.body)
+    
 
 })
 
@@ -96,7 +95,7 @@ router.delete('/movies/:id', auth, async (req, res) => {
     }
 })
 
-
+//for file upload 
 const upload = multer({
     dest: 'avatars',
     limits: {
