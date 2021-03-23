@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 var validator = require('validator');
 
-mongoose.connect('mongodb://127.0.0.1:27017/movie-review-app-api', {
+mongoose.connect(process.env.MONGODB_URL, {
 
     useNewURLParser: true,
     useCreateIndex: true,
