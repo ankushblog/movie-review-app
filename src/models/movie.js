@@ -11,7 +11,7 @@ const Movie = mongoose.model('Movie', {
         required: true
     },
     releasedate: {
-        type: Number        //1
+        type: Number        
     },
     image: {
         type: String

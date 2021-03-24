@@ -78,8 +78,9 @@ userSchema.statics.findByIdPassword = ((email, password) => {
     if (!isMatch) {
         throw new Error('unable to login')
     }
+    
+        return user
 
-    return user
 })
 
 
