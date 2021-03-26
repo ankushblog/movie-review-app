@@ -15,7 +15,7 @@ var corsOptions = {
 const userRouter = require('./routers/user')
 const movieRouter = require('./routers/movie')
 
-const app = express()
+const app = express() 
 
 const port = process.env.PORT
 

@@ -25,7 +25,7 @@ router.post('/movies', auth, async (req, res) => {
 
 })
 
-//get all movies
+//get all movies(this will go through authentication)
 router.get("/movies", auth, async (req, res) => {
 
     try {
@@ -35,6 +35,19 @@ router.get("/movies", auth, async (req, res) => {
     catch (e) {
         res.send(e);
     }
+
+})
+
+//get all movies for the home page 
+router.get("/movies/all", async (req, res) => {
+
+    try {
+        const movies = await Movie.find({});
+        res.send(movies);
+    }
+    catch (e) {
+        res.send(e);
+    }s
 
 })
 
@@ -117,8 +130,6 @@ const upload = multer({
 // }, (error, req, res, next) => {
 //     res.status(400).send({ error: error.message })
 // })
-
-
 
 
 //adding poster to movie
